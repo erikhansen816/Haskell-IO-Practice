@@ -48,5 +48,13 @@
 
 
 
-main = putStrLn "Put your program here!"
-
+isDivisor n d = n `mod` d==0
+fizzBuzz n f b = [if isDivisor x f then if isDivisor x b then "FizzBuzz" else "Fizz" else if isDivisor x b then "Buzz" else show x | x <- [1..n]]
+main = do
+    putStrLn "How many numbers shall we print?"
+    num <- readLn
+    putStrLn "For multiples of what number shall we print 'Fizz'?"
+    fizzNum <- readLn
+    putStrLn "For multiples of what number shall we print 'Buzz'?"
+    buzzNum <- readLn
+    mapM_ putStrLn $ fizzBuzz num fizzNum buzzNum

@@ -39,15 +39,29 @@
     I KNEW IT! Thank you.
 -}
 
-guessIt :: Int -> IO ()
-guessIt 11 = putStrLn "Wait.. I have already guessed everything! Cheater."
-guessIt s = do
-    putStrLn $ "Is your number " ++ show s ++ "? (answer \"yes\" or \"no\") "
-    guess <- getLine
-    if guess == "yes"
-        then putStrLn "I KNEW IT! Thank you."
-        else guessIt (s+1)
+guessIt :: Int -> Int -> IO ()
+guessIt bigNum smallNum = do
+    let averageNum =  (div (bigNum + smallNum) 2)
+    if (bigNum - smallNum) >= 2
+        then do
+            putStrLn ("Is your number greater than " ++ show averageNum ++ "? (answer \"yes\" or \"no\") ")
+            ans1 <- getLine
+            if ans1 == "yes"
+                then guessIt bigNum averageNum
+            else guessIt averageNum smallNum
+        else do
+            putStrLn ("Is your number " ++ show smallNum ++ "? (answer \"yes\" or \"no\") ")
+            ans2 <- getLine
+            if ans2 == "yes"
+                then  
+                    putStrLn ("I KNEW IT! Thank you.")
+                else do
+                    putStrLn ("Is your number " ++ show bigNum ++ "? (answer \"yes\" or \"no\") ")
+                    ans3 <- getLine
+                    if ans3 == "yes"
+                        then putStrLn ("I KNEW IT! Thank you.")
+                        else putStrLn ("OOPS...Looks like you forgot your number")
 
 main = do
-    putStrLn "Think of a number between 1 and 10 and I will guess it."
-    guessIt 1
+    putStrLn "Think of a number between 1 and 1000 and I will guess it."
+    guessIt 1000 0
